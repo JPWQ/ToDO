@@ -8,6 +8,7 @@ void addCollection(const char *collection, Collection **collections){
     (*collections)[cLength].collection = malloc(strlen(collection) + 1);
     strcpy((*collections)[cLength].collection, collection);
     (*collections)[cLength].tasks = NULL;
+    (*collections)[cLength].index = cLength;
 
     cLength++;
 }
@@ -29,19 +30,12 @@ void deleteCollection(int index, Collection *collections){
 }
 
 void addTaskToCollection(int index, const char *name, Collection *collections){
-  addTask(&collections[index - 1].tasks, name);
+  addTask(&collections[index].tasks, name);
 }
 
 void listCollections(Collection * const collections){
   for (int i = 0; i < cLength; i++){
     printf("%d. %s\n", i + 1, collections[i].collection);
-  }
-}
-
-void nListCollections(Collection* const collections, int const row, int const col){
-  for (int i = 0; i < cLength; i++){
-    mvprintw(row/2, (col - strlen(collections[i].collection)), "%d. %s\n", i + 1, collections[i].collection);
-    refresh();
   }
 }
 

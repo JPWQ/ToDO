@@ -5,13 +5,13 @@
 typedef struct {
   char *collection;
   Task *tasks;
+  int index;
 } Collection;
 
 void addCollection(const char *collection, Collection **collections);
 void deleteCollection(int index, Collection *collections);
 void addTaskToCollection(int index, const char *name, Collection *collections);
 void listCollections(Collection *collections);
-void nListCollections(Collection* const collections, int const row, int const col);
 void freeCollections(Collection *collections);
 
 #endif

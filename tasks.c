@@ -28,3 +28,4 @@ void deleteTask(int index, Task *tasks){
     printf("Invalid Index.");
   }
 }
+
