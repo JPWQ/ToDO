@@ -2,6 +2,8 @@
 
 int main(){
   Collection* collections = NULL;
+  extern int cLength;
+  extern int tLength;
   char name[100];
   int index;
   int choice = 0;
@@ -36,30 +38,50 @@ int main(){
       case 3:
         printf("Enter An Index: ");
         scanf("%d", &index);
-        deleteCollection(index-1, collections);
+        if (index <= cLength && index > 0){
+          deleteCollection(index-1, collections);
+        } else {
+          printf("Invalid Index.\n");
+        }
         break;
       case 4:
         printf("Enter An Index: ");
         scanf("%d", &index);
-        listTasks(index, collections[index-1].tasks);
+         if (index <= cLength && index > 0){
+          listTasks(index, collections[index-1].tasks);
+        } else {
+          printf("Invalid Index.\n");
+        }
         break;
       case 5:
         printf("Enter An Index: ");
         scanf("%d", &index);
         getchar();
-        printf("Enter A Name: ");
-        fgets(name, sizeof(name), stdin);
-        name[strcspn(name, "\n")] = 0;
-        addTaskToCollection(index, name, collections);
+        if (index <= cLength && index > 0) {
+          printf("Enter A Name: ");
+          fgets(name, sizeof(name), stdin);
+          name[strcspn(name, "\n")] = 0;
+          addTaskToCollection(index, name, collections);
+        } else {
+          printf("Invalid Index.\n");
+        }
         break;
       case 6:
-        printf("Enter The Index Of The Collection: ");
-        scanf("%d", &index);
-        getchar();
-        printf("Enter The Index Of The Task: ");
-        scanf("%d", &tIndex);
-        getchar();
-        deleteTask(tIndex - 1, collections[index-1].tasks);
+        if (index <= cLength && index > 0){
+          printf("Enter The Index Of The Collection: ");
+          scanf("%d", &index);
+          getchar();
+          printf("Enter The Index Of The Task: ");
+          scanf("%d", &tIndex);
+          getchar();
+          if (tIndex <= tLength && tIndex > 0){
+            deleteTask(tIndex - 1, collections[index-1].tasks);
+          } else {
+            printf("Invalid Index.\n");
+          }
+        } else {
+          printf("Invalid Index.\n");
+        }
         break;
       case 7:
         printf("Exiting Program...\n");
