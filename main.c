@@ -1,7 +1,7 @@
 #include "main.h"
 
 int main(){
-  Collection** restrict collections = NULL;
+  Collection* collections = NULL;
   char name[100];
   int index;
   int choice = 0;
