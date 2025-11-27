@@ -41,7 +41,7 @@ int main(){
         if (index <= cLength && index > 0){
           deleteCollection(index-1, collections);
         } else {
-          printf("Invalid Index.\n");
+          printf("\nInvalid Index.\n");
         }
         break;
       case 4:
@@ -50,7 +50,7 @@ int main(){
          if (index <= cLength && index > 0){
           listTasks(index, collections[index-1].tasks);
         } else {
-          printf("Invalid Index.\n");
+          printf("\nInvalid Index.\n");
         }
         break;
       case 5:
@@ -63,24 +63,24 @@ int main(){
           name[strcspn(name, "\n")] = 0;
           addTaskToCollection(index, name, collections);
         } else {
-          printf("Invalid Index.\n");
+          printf("\nInvalid Index.\n");
         }
         break;
       case 6:
+        printf("Enter The Index Of The Collection: ");
+        scanf("%d", &index);
+        getchar();
         if (index <= cLength && index > 0){
-          printf("Enter The Index Of The Collection: ");
-          scanf("%d", &index);
-          getchar();
           printf("Enter The Index Of The Task: ");
           scanf("%d", &tIndex);
           getchar();
           if (tIndex <= tLength && tIndex > 0){
             deleteTask(tIndex - 1, collections[index-1].tasks);
           } else {
-            printf("Invalid Index.\n");
+            printf("\nInvalid Index.\n");
           }
         } else {
-          printf("Invalid Index.\n");
+          printf("\nInvalid Index.\n");
         }
         break;
       case 7:
@@ -88,7 +88,7 @@ int main(){
         freeCollections(collections);
         break;
       default:
-        printf("Invalid Input.\n");
+        printf("\nInvalid Input.\n");
         break;
     }
   }
