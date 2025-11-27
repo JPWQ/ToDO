@@ -10,7 +10,7 @@ void addTask(Task **tasks, const char *name){
   tLength++;
 }
 
-void listTasks(int index, Task *tasks){
+void listTasks(int index, Task * const tasks){
   printf("\n");
   for (int i = 0; i<tLength;i++){
     printf("%d.%d %s\n", index, i + 1,tasks[i].task);
@@ -18,7 +18,7 @@ void listTasks(int index, Task *tasks){
 }
 
 void deleteTask(int index, Task *tasks){
-  if (index <= tLength && index > 0){
+  if (index <= tLength && index >= 0){
     free(tasks[index].task);
     for (int i = index; i<=tLength; i++){
       tasks[i] = tasks[i + 1];

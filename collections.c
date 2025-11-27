@@ -13,7 +13,7 @@ void addCollection(const char *collection, Collection **collections){
 }
 
 void deleteCollection(int index, Collection *collections){
-  if (index <= cLength && index > 0){
+  if (index <= cLength && index >= 0){
     printf("%d", cLength);
 
     free(collections[index-1].collection);
@@ -32,7 +32,7 @@ void addTaskToCollection(int index, const char *name, Collection *collections){
   addTask(&collections[index - 1].tasks, name);
 }
 
-void listCollections(Collection *collections){
+void listCollections(Collection * const collections){
   for (int i = 0; i < cLength; i++){
     printf("%d. %s\n", i + 1, collections[i].collection);
   }
@@ -43,5 +43,4 @@ void freeCollections(Collection *collections){
     free(collections[i].collection);
     free(collections[i].tasks);
   }
-  free(collections);
 }

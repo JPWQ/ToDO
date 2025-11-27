@@ -36,7 +36,7 @@ int main(){
       case 3:
         printf("Enter An Index: ");
         scanf("%d", &index);
-        deleteCollection(index, collections);
+        deleteCollection(index-1, collections);
         break;
       case 4:
         printf("Enter An Index: ");
@@ -50,7 +50,7 @@ int main(){
         printf("Enter A Name: ");
         fgets(name, sizeof(name), stdin);
         name[strcspn(name, "\n")] = 0;
-        addTask(&collections[index-1].tasks, name);
+        addTaskToCollection(index, name, collections);
         break;
       case 6:
         printf("Enter The Index Of The Collection: ");
@@ -59,7 +59,7 @@ int main(){
         printf("Enter The Index Of The Task: ");
         scanf("%d", &tIndex);
         getchar();
-        deleteTask(tIndex, collections[index-1].tasks);
+        deleteTask(tIndex - 1, collections[index-1].tasks);
         break;
       case 7:
         printf("Exiting Program...\n");
