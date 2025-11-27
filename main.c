@@ -5,8 +5,8 @@ int main(){
   extern int cLength;
   extern int tLength;
   char name[100];
-  int index;
   int choice = 0;
+  int index;
   int tIndex;
 //  addCollection(NULL, &collections);
   addCollection("Daily", &collections);
