@@ -38,6 +38,13 @@ void listCollections(Collection * const collections){
   }
 }
 
+void nListCollections(Collection* const collections, int const row, int const col){
+  for (int i = 0; i < cLength; i++){
+    mvprintw(row/2, (col - strlen(collections[i].collection)), "%d. %s\n", i + 1, collections[i].collection);
+    refresh();
+  }
+}
+
 void freeCollections(Collection *collections){
   for (int i=0; i<cLength; i++){
     free(collections[i].collection);
