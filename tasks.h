@@ -14,5 +14,6 @@ typedef struct {
 void addTask(Task **tasks, const char *name);
 void listTasks(int index, Task *tasks);
 void deleteTask(int index, Task *tasks);
+void markTaskComplete(int index, Task* tasks);
 
 #endif

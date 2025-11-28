@@ -2,6 +2,8 @@
 
 extern int cLength;
 extern int tLength;
+volatile int cIndex = 0;
+volatile int tIndex = 0;
 int row, col;
 Collection* collections = NULL;
 
@@ -19,44 +21,45 @@ static void drawCMenu(int index) {
   refresh();
 }
 
-static void drawTMenu(int index){
+static void drawTMenu(volatile int *index){
   clear();
   for (int i = 0; i <tLength; i++) {
-    if (i == index) {
+    if (i == *index) {
       attron(A_REVERSE);
     }
-    mvprintw((row/2) + i, (col - strlen(collections[index].tasks[i].task))/2, "%s", collections[index].tasks[i].task);
-    if (i == index) {
+    mvprintw((row/2) + i, (col - strlen(collections[cIndex].tasks[i].task))/2, "%s", collections[cIndex].tasks[i].task);
+    if (i == *index) {
       attroff(A_REVERSE);
     }
   }
   refresh();
 }
 int main() {
-  volatile int index = 0;
-  volatile int tIndex = 0;
   int c, t;
   char name[100];
   addCollection("Daily", &collections);
   addCollection("Weekly", &collections);
 
   initscr();
-  cbreak();
   noecho();
   keypad(stdscr, TRUE);
   curs_set(0);
   getmaxyx(stdscr, row, col);
-  drawCMenu(index);
+  drawCMenu(cIndex);
+  printw("%d", cLength);
+  printw("%d", cIndex);
   while((c = getch()) != 'q'){
+    clear();
+    refresh();
     switch(c) {
       case KEY_DOWN:
-        if (index < cLength - 1) {
-          index++;
+        if (cIndex < cLength - 1) {
+          cIndex++;
         }
       break;
       case KEY_UP:
-        if (index > 0) {
-          index--;
+        if (cIndex > 0) {
+          cIndex--;
         }
       break;
       case 'a':
@@ -65,15 +68,27 @@ int main() {
         refresh();
         mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
         getstr(name);
-        addTaskToCollection(index, name, collections);
+        addTaskToCollection(cIndex, name, collections);
+        noecho();
+      break;
+      case 'c':
+        echo();
+        clear();
+        refresh();
+        mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
+        getstr(name);
+      addCollection(name, &collections);
         noecho();
       break;
       case 10:
         tIndex = 0;
-        drawTMenu(tIndex);
+        drawTMenu(&tIndex);
+        printw("%d", tLength);
+        printw("%d", tIndex); 
         while((t = getch()) != 'q') {
           switch(t) {
             case KEY_DOWN:
+              printw("Breakpoint");
               if (tIndex < tLength - 1) {
                 tIndex++;
           }
@@ -84,14 +99,14 @@ int main() {
           }
             break;
             case 10:
-              getch();
+              markTaskComplete(tIndex, collections[cIndex].tasks);
             break;
           }
-          drawTMenu(tIndex);
+          drawTMenu(&tIndex);
         }
       break;
-    }
-  drawCMenu(index);
+    } 
+  drawCMenu(cIndex);
   }
   freeCollections(collections);
   endwin();

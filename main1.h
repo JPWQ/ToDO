@@ -3,6 +3,6 @@
 #include "collections.h"
 
 static void drawCMenu(int index);
-static void drawTMenu(int index);
+static void drawTMenu(volatile int *index);
 int main();
 #endif

@@ -29,3 +29,6 @@ void deleteTask(int index, Task *tasks){
   }
 }
 
+void markTaskComplete(int index, Task* tasks) {
+  tasks[index].completed = 1;
+}
