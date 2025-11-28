@@ -30,8 +30,9 @@ void deleteCollection(int index, Collection *collections){
 }
 
 void addTaskToCollection(int index, const char *name, Collection *collections){
-  addTask(&collections[index].tasks, name);
-  collections[index].taskCount++;
+  addTask(&collections[index].tasks,
+          &collections[index].taskCount,
+          name);
 }
 
 void listCollections(Collection * const collections){

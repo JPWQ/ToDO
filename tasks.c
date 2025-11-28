@@ -2,12 +2,12 @@
 
 int tLength = 0;
 
-void addTask(Task **tasks, const char *name){
-  *tasks = (Task *)realloc(*tasks, (tLength + 1) * sizeof(Task));
-  (*tasks)[tLength].task = (char *)malloc(strlen(name) + 1);
-  (*tasks)[tLength].completed = 0;
-  strcpy((*tasks)[tLength].task, name);
-  tLength++;
+void addTask(Task **tasks, int *taskCount, const char *name){
+  *tasks = (Task *)realloc(*tasks, (*taskCount + 1) * sizeof(Task));
+  (*tasks)[*taskCount].task = (char *)malloc(strlen(name) + 1);
+  (*tasks)[*taskCount].completed = 0;
+  strcpy((*tasks)[*taskCount].task, name);
+  (*taskCount)++;
 }
 
 void listTasks(int index, Task *tasks) {

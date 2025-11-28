@@ -30,7 +30,7 @@ static void drawTMenu(volatile int index, Collection *collections, int cIndex){
     refresh();
     return;
   }
-  for (int i = 0; i <collections[cIndex].taskCount; i++) {
+  for (int i = 0; i < collections[cIndex].taskCount; i++) {
     if (i == index) {
       attron(A_REVERSE);
     }
@@ -110,7 +110,7 @@ int main() {
           }
             break;
             case 10:
-              markTaskComplete(collections[cIndex].taskCount, collections[cIndex].tasks);
+              markTaskComplete(tIndex, collections[cIndex].tasks);
             break;
           }
           drawTMenu(tIndex, collections, cIndex);
