@@ -17,10 +17,10 @@ void deleteCollection(int index, Collection *collections){
   if (index <= cLength && index >= 0){
     printf("%d", cLength);
 
-    free(collections[index-1].collection);
-    free(collections[index-1].tasks);
+    free(collections[index].collection);
+    free(collections[index].tasks);
 
-    for(int i = index-1; i<=cLength; i++){
+    for(int i = index; i<=cLength; i++){
       collections[i] = collections[i+1];
     }
     cLength--;
@@ -39,6 +39,11 @@ void listCollections(Collection * const collections){
   for (int i = 0; i < cLength; i++){
     printf("%d. %s\n", i + 1, collections[i].collection);
   }
+}
+
+void editCollection(int index, const char *collection, Collection **collections) {
+  (*collections)[index].collection = (char *)malloc(strlen(collection) + 1);
+  strcpy((*collections)[index].collection, collection);
 }
 
 void freeCollections(Collection *collections){

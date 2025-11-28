@@ -17,18 +17,27 @@ void listTasks(int index, Task *tasks) {
   }
 }
 
-void deleteTask(int index, Task *tasks){
-  if (index <= tLength && index >= 0){
+void deleteTask(int index, int *taskCount, Task *tasks){
+  if (index <= *taskCount && index >= 0){
     free(tasks[index].task);
-    for (int i = index; i<=tLength; i++){
+    for (int i = index; i <= *taskCount; i++){
       tasks[i] = tasks[i + 1];
     }
-    tLength--;
+    (*taskCount)--;
   } else {
     printf("Invalid Index.");
   }
 }
 
+void editTask(int index, Task **tasks, const char *name) {
+  (*tasks)[index].task = (char *)malloc(strlen(name) + 1);
+  strcpy((*tasks)[index].task, name);
+}
+
 void markTaskComplete(int index, Task* tasks) {
+  if (tasks[index].completed == 0) {
   tasks[index].completed = 1;
+  } else {
+    tasks[index].completed = 0;
+  }
 }

@@ -34,10 +34,16 @@ static void drawTMenu(volatile int index, Collection *collections, int cIndex){
     if (i == index) {
       attron(A_REVERSE);
     }
+    if (collections[cIndex].tasks[i].completed == 1) {
+      attron(COLOR_PAIR(1));
+    }
     mvprintw((row/2) + i,
              (col - strlen(collections[cIndex].tasks[i].task))/2,
              "%s",
              collections[cIndex].tasks[i].task);
+    if ( collections[cIndex].tasks[i].completed == 1) {
+      attroff(COLOR_PAIR(1));
+    }
     if (i == index) {
       attroff(A_REVERSE);
     }
@@ -51,13 +57,15 @@ int main() {
   addCollection("Weekly", &collections);
 
   initscr();
+
+  start_color();
+  init_pair(1, COLOR_GREEN, COLOR_BLACK);
+
   noecho();
   keypad(stdscr, TRUE);
   curs_set(0);
   getmaxyx(stdscr, row, col);
   drawCMenu(cIndex);
-  printw("%d", cLength);
-  printw("%d", cIndex);
   while((c = getch()) != 'q'){
     clear();
     refresh();
@@ -90,12 +98,23 @@ int main() {
       addCollection(name, &collections);
         noecho();
       break;
+      case 'd':
+        clear();
+        refresh();
+        deleteCollection(cIndex, collections);
+      break;
+      case 'e':
+        echo();
+        clear();
+        refresh();
+        mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
+        getstr(name);
+        editCollection(cIndex, name, &collections);
+        noecho();
+      break;
       case 10:
         tIndex = 0;
         drawTMenu(tIndex, collections, cIndex);
-        printw("%d", collections[cIndex].taskCount);
-        printw("%d", tIndex); 
-        printw("%d", cIndex);
         while((t = getch()) != 'q') {
           switch(t) {
             case KEY_DOWN:
@@ -108,6 +127,20 @@ int main() {
               if (tIndex > 0) {
             tIndex--;
           }
+            break;
+            case 'd':
+              clear();
+              refresh();
+              deleteTask(tIndex, &collections[cIndex].taskCount, collections[cIndex].tasks);
+            break;
+            case 'e':
+              echo();
+              clear();
+              refresh();
+              mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
+              getstr(name);
+              editTask(tIndex, &collections[cIndex].tasks, name);
+              noecho();
             break;
             case 10:
               markTaskComplete(tIndex, collections[cIndex].tasks);

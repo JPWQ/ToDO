@@ -13,7 +13,8 @@ typedef struct {
 
 void addTask(Task **tasks, int *taskCount, const char *name);
 void listTasks(int index, Task *tasks);
-void deleteTask(int index, Task *tasks);
+void deleteTask(int index, int *taskCount, Task *tasks);
+void editTask(int index, Task** tasks, const char *name);
 void markTaskComplete(int index, Task* tasks);
 
 #endif
