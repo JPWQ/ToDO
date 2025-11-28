@@ -10,7 +10,7 @@ void addTask(Task **tasks, const char *name){
   tLength++;
 }
 
-void listTasks(int index, Task * const tasks){
+void listTasks(int index, Task *tasks) {
   printf("\n");
   for (int i = 0; i<tLength;i++){
     printf("%d.%d %s\n", index, i + 1,tasks[i].task);

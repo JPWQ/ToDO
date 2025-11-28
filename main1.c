@@ -1,7 +1,6 @@
 #include "main1.h"
 
 extern int cLength;
-extern int tLength;
 volatile int cIndex = 0;
 volatile int tIndex = 0;
 int row, col;
@@ -9,6 +8,7 @@ Collection* collections = NULL;
 
 static void drawCMenu(int index) {
   clear();
+  refresh();
   for (int i = 0; i <cLength; i++) {
     if (i == index) {
       attron(A_REVERSE);
@@ -21,14 +21,24 @@ static void drawCMenu(int index) {
   refresh();
 }
 
-static void drawTMenu(volatile int *index){
+static void drawTMenu(volatile int index, Collection *collections, int cIndex){
   clear();
-  for (int i = 0; i <tLength; i++) {
-    if (i == *index) {
+  refresh();
+
+  if (collections[cIndex].taskCount == 0){
+    mvprintw(row/2, col/2 - 5, "%s", "No Tasks");
+    refresh();
+    return;
+  }
+  for (int i = 0; i <collections[cIndex].taskCount; i++) {
+    if (i == index) {
       attron(A_REVERSE);
     }
-    mvprintw((row/2) + i, (col - strlen(collections[cIndex].tasks[i].task))/2, "%s", collections[cIndex].tasks[i].task);
-    if (i == *index) {
+    mvprintw((row/2) + i,
+             (col - strlen(collections[cIndex].tasks[i].task))/2,
+             "%s",
+             collections[cIndex].tasks[i].task);
+    if (i == index) {
       attroff(A_REVERSE);
     }
   }
@@ -82,14 +92,15 @@ int main() {
       break;
       case 10:
         tIndex = 0;
-        drawTMenu(&tIndex);
-        printw("%d", tLength);
+        drawTMenu(tIndex, collections, cIndex);
+        printw("%d", collections[cIndex].taskCount);
         printw("%d", tIndex); 
+        printw("%d", cIndex);
         while((t = getch()) != 'q') {
           switch(t) {
             case KEY_DOWN:
               printw("Breakpoint");
-              if (tIndex < tLength - 1) {
+              if (tIndex < collections[cIndex].taskCount - 1) {
                 tIndex++;
           }
             break;
@@ -99,10 +110,10 @@ int main() {
           }
             break;
             case 10:
-              markTaskComplete(tIndex, collections[cIndex].tasks);
+              markTaskComplete(collections[cIndex].taskCount, collections[cIndex].tasks);
             break;
           }
-          drawTMenu(&tIndex);
+          drawTMenu(tIndex, collections, cIndex);
         }
       break;
     } 

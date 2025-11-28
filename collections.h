@@ -6,6 +6,7 @@ typedef struct {
   char *collection;
   Task *tasks;
   int index;
+  int taskCount;
 } Collection;
 
 void addCollection(const char *collection, Collection **collections);

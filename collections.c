@@ -8,8 +8,8 @@ void addCollection(const char *collection, Collection **collections){
     (*collections)[cLength].collection = malloc(strlen(collection) + 1);
     strcpy((*collections)[cLength].collection, collection);
     (*collections)[cLength].tasks = NULL;
+    (*collections)[cLength].taskCount = 0;
     (*collections)[cLength].index = cLength;
-
     cLength++;
 }
 
@@ -31,6 +31,7 @@ void deleteCollection(int index, Collection *collections){
 
 void addTaskToCollection(int index, const char *name, Collection *collections){
   addTask(&collections[index].tasks, name);
+  collections[index].taskCount++;
 }
 
 void listCollections(Collection * const collections){
