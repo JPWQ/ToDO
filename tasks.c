@@ -20,7 +20,7 @@ void listTasks(int index, Task *tasks) {
 void deleteTask(int index, int *taskCount, Task *tasks){
   if (index <= *taskCount && index >= 0){
     free(tasks[index].task);
-    for (int i = index; i <= *taskCount; i++){
+    for (int i = index; i < *taskCount; i++){
       tasks[i] = tasks[i + 1];
     }
     (*taskCount)--;

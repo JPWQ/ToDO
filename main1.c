@@ -50,6 +50,7 @@ static void drawTMenu(volatile int index, Collection *collections, int cIndex){
   }
   refresh();
 }
+
 int main() {
   int c, t;
   char name[100];
@@ -84,6 +85,10 @@ int main() {
         echo();
         clear();
         refresh();
+        mvprintw((row/2) - 1,
+                 ((col - (strlen("Add A Task To Collection.") + strlen(collections[cIndex].collection)))/2),
+                 "Add A Task To %s Collection.",
+                 collections[cIndex].collection);
         mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
         getstr(name);
         addTaskToCollection(cIndex, name, collections);
@@ -93,6 +98,10 @@ int main() {
         echo();
         clear();
         refresh();
+        mvprintw((row/2) - 1,
+                 (col - strlen("Add A New Collection."))/2,
+                 "%s",
+                 "Add A New Collection.");
         mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
         getstr(name);
       addCollection(name, &collections);
@@ -101,16 +110,24 @@ int main() {
       case 'd':
         clear();
         refresh();
-        deleteCollection(cIndex, collections);
+        if (cLength > 0) {
+          deleteCollection(cIndex, collections);
+        }
       break;
       case 'e':
-        echo();
-        clear();
-        refresh();
-        mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
-        getstr(name);
-        editCollection(cIndex, name, &collections);
-        noecho();
+        if (cLength > 0) {
+          echo();
+          clear();
+          refresh();
+          mvprintw((row/2) - 1,
+                   (col - (strlen("Edit The Name Of  Collection.") + strlen(collections[cIndex].collection)))/2,
+                   "Edit The Name Of %s Collection.",
+                   collections[cIndex].collection);
+          mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
+          getstr(name);
+          editCollection(cIndex, name, &collections);
+          noecho();
+        }
       break;
       case 10:
         tIndex = 0;
@@ -118,7 +135,6 @@ int main() {
         while((t = getch()) != 'q') {
           switch(t) {
             case KEY_DOWN:
-              printw("Breakpoint");
               if (tIndex < collections[cIndex].taskCount - 1) {
                 tIndex++;
           }
@@ -131,19 +147,29 @@ int main() {
             case 'd':
               clear();
               refresh();
-              deleteTask(tIndex, &collections[cIndex].taskCount, collections[cIndex].tasks);
+              if (collections[cIndex].taskCount > 0){
+                deleteTask(tIndex, &collections[cIndex].taskCount, collections[cIndex].tasks);
+              }
             break;
             case 'e':
-              echo();
-              clear();
-              refresh();
-              mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
-              getstr(name);
-              editTask(tIndex, &collections[cIndex].tasks, name);
-              noecho();
+              if (collections[cIndex].taskCount > 0) {
+                echo();
+                clear();
+                refresh();
+                mvprintw((row/2) - 1,
+                         (col - (strlen("Edit Task .") + strlen(collections[cIndex].tasks[tIndex].task)))/2,
+                         "Edit Task %s.",
+                         collections[cIndex].tasks[tIndex].task);
+                mvprintw((row/2), (col - strlen("Enter A Name: "))/2, "%s", "Enter A Name: ");
+                getstr(name);
+                editTask(tIndex, &collections[cIndex].tasks, name);
+                noecho();
+              }
             break;
             case 10:
-              markTaskComplete(tIndex, collections[cIndex].tasks);
+              if (collections[cIndex].taskCount > 0){
+                markTaskComplete(tIndex, collections[cIndex].tasks);
+              }
             break;
           }
           drawTMenu(tIndex, collections, cIndex);

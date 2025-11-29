@@ -15,7 +15,6 @@ void addCollection(const char *collection, Collection **collections){
 
 void deleteCollection(int index, Collection *collections){
   if (index <= cLength && index >= 0){
-    printf("%d", cLength);
 
     free(collections[index].collection);
     free(collections[index].tasks);
