@@ -1,7 +1,7 @@
 This project is a simple TUI to do list application that uses ncurses. There are two menus. The first is the Collections menu. Collections organize task lists. 
 
 'a' - Add a task to the highlighted Collection.  
-'c' = Create a new Collection.  
+'c' - Create a new Collection.  
 'd' - Delete the highlighted Collection.  
 'e' - Edit the name of the highlighted Collection.  
 'Enter' - View the tasks of the highlighted Collection.  
