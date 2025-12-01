@@ -1,4 +1,4 @@
-This project is a simple TUI to do list application. There are two menus. The first is the Collections menu. Collections organize task lists. 
+This project is a simple TUI to do list application that uses ncurses. There are two menus. The first is the Collections menu. Collections organize task lists. 
 
 'a' - Add a task to the highlighted Collection.  
 'c' = Create a new Collection.  
