@@ -11,3 +11,5 @@ The second menu is the Tasks menu. Each Collection has it's own array of tasks.
 'd' - Delete the highlighted Task.  
 'e' - Edit the name of the highlighted Task.  
 'Enter' - Toggle the completed value. Press Enter to mark and unmark the Task as completed.  
+
+Additionally, main1.c is the file with ncurses support.
